@@ -16,12 +16,10 @@ public class HtmlParserTest {
     final static String DUMMY_BASE_PATH = "src/test/java/eliana/cappello/unit/dummy/";
 
     static Document document;
-    static Document productDocument;
 
     @BeforeAll
     public static void setUp() throws Exception {
         document = Jsoup.parse(new File(DUMMY_BASE_PATH + "dummy_product_parse_test.html"), "UTF-8");
-        productDocument = Jsoup.parse(new File(DUMMY_BASE_PATH + "dummy_product_web_page.html"), "UTF-8");
     }
 
     @Test

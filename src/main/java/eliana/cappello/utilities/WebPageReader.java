@@ -35,7 +35,6 @@ public class WebPageReader {
         CommandLine line = parseArguments(args);
 
         if (line.hasOption("webpage")) {
-
             System.out.println(line.getOptionValue("webpage"));
             String webpage = line.getOptionValue("webpage");
             try {
@@ -55,7 +54,6 @@ public class WebPageReader {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
         } else {
             printAppHelp();
         }
@@ -115,7 +113,6 @@ public class WebPageReader {
             // In order to get Description an kcal value, we get the page of the product
             Element h3 = element.getElementsByTag("h3").first();
             String productLink = h3.getElementsByTag("a").attr("href");
-
 
             productLink = productLink.replace("../", "");
             connection = Jsoup.connect(BASE_PATH + productLink);
