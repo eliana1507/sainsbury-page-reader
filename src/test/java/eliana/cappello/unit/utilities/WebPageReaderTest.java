@@ -6,19 +6,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Assertions;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
+import java.io.ByteArrayOutputStream;
 
 @PrepareForTest({Jsoup.class, Connection.class})
 public class WebPageReaderTest {
@@ -74,14 +74,14 @@ public class WebPageReaderTest {
     public void runTest() {
         String[] args = {"-webpage" + PRODUCT_LIST_URL};
         reader.run(args);
-        Assertions.assertTrue(outContent.toString().indexOf("result") > 0 , "The stream contains the result");
-        Assertions.assertTrue(outContent.toString().indexOf("total") > 0 , "The stream contains the total");
+        Assertions.assertTrue(outContent.toString().indexOf("result") > 0 , "The stream don't contains the result");
+        Assertions.assertTrue(outContent.toString().indexOf("total") > 0 , "The stream don't contains the total");
     }
 
     @Test
     public void runWithSrongParameter() {
         String[] args = {"-page" + PRODUCT_LIST_URL};
         reader.run(args);
-
+        Assertions.assertFalse(outContent.toString().indexOf("result") > 0 , "The stream contains the result");
     }
 }

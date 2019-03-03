@@ -1,14 +1,13 @@
 package eliana.cappello.utilities;
 
-//import java.io.File;
 import java.io.IOException;
 
+import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import eliana.cappello.models.Product;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.CommandLine;
@@ -16,10 +15,11 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.CommandLineParser;
+
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class WebPageReader {
@@ -39,7 +39,7 @@ public class WebPageReader {
             System.out.println(line.getOptionValue("webpage"));
             String webpage = line.getOptionValue("webpage");
             try {
-                ObjectMapper mapper = new ObjectMapper();
+                Gson gson = new Gson();
 
                 final List<Product> products = readData(webpage);
                 Map<String,Double> total = getTotal(products);
@@ -48,7 +48,7 @@ public class WebPageReader {
                 result.put("result", products);
                 result.put("total", total);
 
-                String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+                String jsonInString = gson.toJson(result);
 
                 System.out.println(jsonInString);
 
@@ -103,7 +103,6 @@ public class WebPageReader {
         Connection connection = Jsoup.connect(webPage);
         connection.timeout(10000);
         Document doc = connection.get();
-        //Document doc = Jsoup.parse(new File("src/test/java/eliana/cappello/unit/dummy/dummy_web_page.html"), "UTF-8");
         Elements elementsProduct = doc.getElementsByClass("product ");
 
         for (Element element: elementsProduct) {
@@ -122,12 +121,9 @@ public class WebPageReader {
             connection = Jsoup.connect(BASE_PATH + productLink);
             connection.timeout(10000);
             Document productDocument = connection.get();
-            //System.out.println(productPage);
-            //Document productDocument = Jsoup.parse(new File("src/test/java/eliana/cappello/unit/dummy/dummy_product_web_page.html"), "UTF-8");
 
             // get information section
             Element informationSection = productDocument.getElementById("information");
-
             product.setDescription(parser.getDescriptionFromElement(informationSection));
 
             // here we set the kcal value only if is specify in page

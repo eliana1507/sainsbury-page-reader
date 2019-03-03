@@ -1,8 +1,8 @@
 package eliana.cappello.integration.utilities;
 
-import eliana.cappello.utilities.WebPageReader;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import eliana.cappello.utilities.WebPageReader;
 
 public class WebPageReaderTest {
 
